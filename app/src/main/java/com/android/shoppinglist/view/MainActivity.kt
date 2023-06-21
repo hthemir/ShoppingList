@@ -4,18 +4,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.android.shoppinglist.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.android.shoppinglist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var bottomNav: BottomNavigationView
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadFragment(ShoppingListFragment())
-        bottomNav = findViewById(R.id.main_bottom_navigation_view)
-        bottomNav.setOnItemSelectedListener {
+        setupBottomNavigationItemSelectedListener()
+    }
+
+    private fun setupBottomNavigationItemSelectedListener() {
+        binding.mainBottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.shopping_list -> {
                     loadFragment(ShoppingListFragment())
